@@ -1,0 +1,486 @@
+Nightmare level step by step
+
+
+
+=========
+I Can Win
+=========
+
+1. Установите git и сгенерируйте пару ssh ключей. Авторизуйте публичный ключ на github.com.
+
+my@DESKTOP MINGW64 ~
+$ ssh-keygen -t rsa -C "kalinkin.eclipse@gmail.com"
+
+
+
+2. Укажите свой user.name и user.email в git.
+
+my@DESKTOP MINGW64 ~
+$ git config --global user.name “Roman Kalinkin“
+
+my@DESKTOP MINGW64 ~
+$ git config --global user.email “kalinkin.eclipse@gmail.com"
+
+
+
+3. Создайте новый репозиторий на github.com и склонируйте его локально на свой компьютер.
+
+(creating new repository "automation-training-git-nightmare" using web-interface)
+
+my@DESKTOP MINGW64 ~
+$ cd /c/EPAM
+
+my@DESKTOP MINGW64 ~/EPAM
+$ git clone git@github.com:solarEcl1pse/automation-training-git-nightmare.git
+Cloning into 'automation-training-git-nightmare'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+my@DESKTOP MINGW64 ~/EPAM
+$ cd automation-training-git-nightmare/
+
+
+
+4. Создайте файл названием song.txt и поместите туда половину текста любимой песни.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo "first half of my favorite song" >> song.txt
+
+
+
+5. Сделайте коммит с названием "add first half of my favorite song" и отправьте его на сервер.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git add song.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git commit -m "add first half of my favorite song"
+[master 1fc2bc2] add first half of my favorite song
+ 1 file changed, 1 insertion(+)
+ create mode 100644 song.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 333 bytes | 333.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:solarEcl1pse/automation-training-git-nightmare.git
+   cc4e898..1fc2bc2  master -> master
+
+
+
+6. Убедитесь что на github есть файл song.txt с текстом песни.
+
+(checking via web-interface)
+
+
+
+7. Используя веб-интерфейс гитхаба добавьте вторую половину текста песни и сделайте коммит с названием "finish my song".
+
+(adding second half of my favorite song and commiting the change via web-interface)
+
+
+
+8. В локальном репозитории сделайте pull и убедитесь что коммит, который вы создали на github, подтянулся и у вас полный текст песни.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 701 bytes | 41.00 KiB/s, done.
+From github.com:solarEcl1pse/automation-training-git-nightmare
+   1fc2bc2..e80e569  master     -> origin/master
+Updating 1fc2bc2..e80e569
+Fast-forward
+ song.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+
+
+
+
+===========
+Bring It On
+===========
+
+1. Добавьте в проект файл .gitignore и настройте так чтобы скрыть файлы с расширением .db, .log и директории с названиями target или bin.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e ".log\n.db\ntarget/\nbin/\n" >> .gitignore
+
+
+
+2. Создайте ветку feature и добавьте в неё два коммита.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout -b feature
+Switched to a new branch 'feature'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git add .gitignore
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git commit -m "first feature commit"
+[feature 0932326] first feature commit
+ 1 file changed, 5 insertions(+)
+ create mode 100644 .gitignore
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ sed -i "5d" .gitignore
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git add .gitignore
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git commit -m "second feature commit"
+[feature cebd694] second feature commit
+ 1 file changed, 1 deletion(-)
+
+
+
+3. Смержите ветку feature в master
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git checkout master
+Switched to branch 'master'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git merge feature
+Updating e80e569..cebd694
+Fast-forward
+ .gitignore | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 .gitignore
+
+
+
+4. Вернитесь в feature и создайте файл arrows.txt cледующего содержания: "The ship glides gently on the waves\nAs day turns into night". Выполните коммит.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout feature
+Switched to branch 'feature'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ echo -e "The ship glides gently on the waves\nAs day turns into night" >> arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git add arrows.txt
+
+kamy@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git commit -m "add first 2 lines to the song"
+[feature cf2d839] add first 2 lines to the song
+ 1 file changed, 2 insertions(+)
+ create mode 100644 arrows.txt
+
+
+
+5. Перейдите в master. Создайте там файл arrows.txt и добавьте следующий текст: "One thousand burning arrows\nFill the starlit sky". Выполните коммит.
+ 
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (feature)
+$ git checkout master
+Switched to branch 'master'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e "One thousand burning arrows\nFill the starlit sky" >> arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git add arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git commit -m "add first 2 lines to the song"
+[master 842d8a4] add first 2 lines to the song
+ 1 file changed, 2 insertions(+)
+ create mode 100644 arrows.txt
+
+
+
+6. Смержите feature в master решив конфликт: сохраните все 4 строки в файле arrows.txt в порядке их добавления в пунктах 4 и 5.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git (master)
+$ git merge feature
+CONFLICT (add/add): Merge conflict in arrows.txt
+Auto-merging arrows.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e "7d" arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e "4d" arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e "1d" arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master|MERGING)
+$ git add arrows.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master) (master|MERGING)
+$ git commit -m "merge branch "feature""
+[master 04f83c2] merge branch feature
+
+
+
+
+
+==============
+Hurt Me Plenty
+==============
+
+1. Создайте ветку storm и добавьте коммит в файл storm.txt: "Twenty ships with Norsemen braves\nRiding the northern wind".
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout -b storm
+Switched to a new branch 'storm'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ echo -e "Twenty ships with Norsemen braves\nRiding the northern wind" >> storm.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git add storm.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git commit -m "add first 2 lines to the song"
+[storm c510120] add first 2 lines to the song
+ 1 file changed, 2 insertions(+)
+ create mode 100644 storm.txt
+
+
+
+2. Добавьте еще 2 строки в storm.txt и сделайте еще один коммит: "They left their shores at early dawn\nAs a red sun was rising in the east".
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ echo -e "They left their shores at early dawn\nAs a red sun was rising in the east" >> storm.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git add storm.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git commit -m "add another 2 lines to the song"
+[storm 4a5826a] add another 2 lines to the song
+ 1 file changed, 2 insertions(+)
+
+
+
+3. Вернитесь в master и создайте файл pursuit.txt с текстом ниже: "The warming sun returns again\nAnd melts away the snow\nThe sea is freed from icy chains\nWinter is letting go". Выполните коммит.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git checkout master
+Switched to branch 'master'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ echo -e "The warming sun returns again\nAnd melts away the snow\nThe sea is freed from icy chains\nWinter is letting go" >> pursuit.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git add pursuit.txt
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git commit -m "add 4 lines to the song"
+[master 1251f4a] add 4 lines to the song
+ 1 file changed, 4 insertions(+)
+ create mode 100644 pursuit.txt
+
+
+
+4. Отметьте коммит тегом session1 и перейдите в ветку storm.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git tag session1
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout storm
+Switched to branch 'storm'
+
+
+
+5. Сделайте rebase ветки storm так чтобы она содержала последний коммит из мастера.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git rebase master
+Successfully rebased and updated refs/heads/storm.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git log
+commit f41d6a670e417e49e358c3e4a338628e98bc5ff0 (HEAD -> storm)
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:25:15 2021 +0300
+
+    add another 2 lines to the song
+
+commit 6332731d06c95007284b8b63285ba0f1e9dc4a6f
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:23:43 2021 +0300
+
+    add first 2 lines to the song
+
+commit 1251f4a063876293ea581eb9b62920e8f240c785 (tag: session1, origin/master, origin/HEAD, master)
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:28:45 2021 +0300
+
+    add 4 lines to the song
+
+commit 04f83c2ee03310dea305b09af8b74fb935899971
+Merge: 842d8a4 cf2d839
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:18:36 2021 +0300
+
+    merge branch feature
+
+commit 842d8a4efa50a8a1e9676fc4a48936812daa1fbd
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:09:00 2021 +0300
+
+    add first 2 lines to the song
+
+commit cf2d839c24dbf0b9b1b5179fc7f23e14ee7b05c4 (feature)
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 16:05:17 2021 +0300
+
+    add first 2 lines to the song
+
+commit cebd69470d915bd1e3b094ad21ce83f437b354de
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 15:56:13 2021 +0300
+
+    second feature commit
+
+commit 0932326898a4e87828897213dc1587a9d056d8d8
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 15:41:29 2021 +0300
+
+    first feature commit
+
+commit e80e569c0e1640e8e462d3e63b9b18c833b53b28
+Author: Roman Kalinkin <65119385+solarEcl1pse@users.noreply.github.com>
+Date:   Wed Mar 10 15:36:57 2021 +0300
+
+    finish my song"
+
+commit 1fc2bc29ff4f838969c744ad76cb8997c4e14986
+Author: Roman Kalinkin <kalinkin.eclipse@gmail.com>
+Date:   Wed Mar 10 15:33:26 2021 +0300
+
+    add first half of my favorite song
+
+commit cc4e8989fc72219c32a6551b20ecd6cd68f68aad
+Author: Roman Kalinkin <65119385+solarEcl1pse@users.noreply.github.com>
+Date:   Wed Mar 10 15:15:55 2021 +0300
+
+    Initial commit
+
+
+
+
+
+========
+Hardcore
+========
+
+1. Сделайте push вашего репозитория и убедитесь, что все коммиты есть на github.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git push --set-upstream origin master
+Enumerating objects: 19, done.
+Counting objects: 100% (19/19), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (18/18), 1.73 KiB | 355.00 KiB/s, done.
+Total 18 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), done.
+To github.com:solarEcl1pse/automation-training-git-nightmare.git
+   e80e569..1251f4a  master -> master
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout storm
+Switched to branch 'storm'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git push --set-upstream origin storm
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 632 bytes | 316.00 KiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 1 local object.
+remote:
+remote: Create a pull request for 'storm' on GitHub by visiting:
+remote:      https://github.com/solarEcl1pse/automation-training-git-nightmare/pull/new/storm
+remote:
+To github.com:solarEcl1pse/automation-training-git-nightmare.git
+ * [new branch]      storm -> storm
+Branch 'storm' set up to track remote branch 'storm' from 'origin'.
+
+
+
+2. Сделайте новый репозиторий на github.
+
+(creating new repository "automation-training-git-nightmare-backup" using web-interface)
+
+
+
+3. Смените remote в локальном репозитории так, чтобы fetch и push шел на новый репозиторий который был создан в предыдущем шаге.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git remote remove origin
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git remote add origin git@github.com:solarEcl1pse/automation-training-git-backup.git
+
+
+
+4. Сделайте push и убедитесь, что второй репозиторий на гитхабе выглядит так же, как и первый.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git checkout master
+Switched to branch 'master'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git push --set-upstream origin master
+Enumerating objects: 27, done.
+Counting objects: 100% (27/27), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (21/21), done.
+Writing objects: 100% (27/27), 3.30 KiB | 563.00 KiB/s, done.
+Total 27 (delta 5), reused 3 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), done.
+To github.com:solarEcl1pse/automation-training-git-nightmare-backup.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (master)
+$ git checkout storm
+Switched to branch 'storm'
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git push --set-upstream origin storm
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 632 bytes | 316.00 KiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 1 local object.
+remote:
+remote: Create a pull request for 'storm' on GitHub by visiting:
+remote:      https://github.com/solarEcl1pse/automation-training-git-nightmare-backup/pull/new/storm
+remote:
+To github.com:solarEcl1pse/automation-training-git-nightmare-backup.git
+ * [new branch]      storm -> storm
+Branch 'storm' set up to track remote branch 'storm' from 'origin'.
+
+
+
+5. Верните настройки remote в исходное состояние: пул и пуш первого локального репозитория ведет в один удаленный репозиторий на гитхабе.
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git remote remove origin
+
+my@DESKTOP MINGW64 ~/EPAM/automation-training-git-nightmare (storm)
+$ git remote add origin git@github.com:solarEcl1pse/automation-training-git-nightmare.git
